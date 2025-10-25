@@ -3,6 +3,9 @@ import Sidebar from '../components/Sidebar'
 import { prisma } from '@/lib/prisma'
 import { getCurrentUser } from '@/lib/auth'
 import { TrendingUp } from 'lucide-react'
+import ProductChart from '../components/ProductChart'
+
+
 
 
 const page = async() => {
@@ -52,6 +55,33 @@ const page = async() => {
     orderBy:{createAt:'desc'},
     take:5
   });
+
+  const now = new Date();
+  // console.log(now)
+  const weeklyProductsData = []
+
+  for(let i=11;i>=0;i--){
+    const weekStart = new Date(now);
+    weekStart.setDate(weekStart.getDate() - i*7);
+    weekStart.setHours(0,0,0,0);
+
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekEnd.getDate() + 6 );
+    weekStart.setHours(23,59,59,999);
+
+
+    const weekLabel = `${String(weekStart.getMonth()+1).padStart(2,'0')}/${String(weekStart.getDate() + 1 ).padStart(2,'0')}`; 
+
+    const weekProducts = allProducts.filter(product=>{
+      const productDate = new Date(product.createAt); 
+      return productDate >= weekStart && productDate <= weekEnd;  
+    });
+
+    weeklyProductsData.push({
+      week:weekLabel,
+      products:weekProducts.length
+    })
+  }
 
   // const allProducts = await prisma.products.findMany({
   //   where:{userId:userId},
@@ -113,7 +143,16 @@ const page = async() => {
           </div>
 
           {/* inventory overtime */}
-          
+          <div className='bg-white rounded-lg border border-gray-200 p-6'>
+            <div className='flex items-center justify-between mb-6'>
+              <h2 className='text-lg font-semibold text-gray-900 mb-6'>New Products per week</h2>
+            </div>
+            <div className='h-48'>
+              <ProductChart data={weeklyProductsData}/> 
+
+            </div>
+          </div>
+
 
         </div>
 
