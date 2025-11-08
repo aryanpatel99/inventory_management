@@ -5,6 +5,11 @@ import { getCurrentUser } from '@/lib/auth'
 import { TrendingUp } from 'lucide-react'
 import ProductChart from '../components/ProductChart'
 
+import type { Prisma } from "@prisma/client";
+
+type ProductSummary = Prisma.ProductsGetPayload<{
+  select: { price: true; quantity: true; createAt: true };
+}>;
 
 
 
@@ -15,7 +20,7 @@ const page = async () => {
   const user = await getCurrentUser();
   const userId = user.id;
 
-  const [totalProducts, lowStock, allProducts] = await Promise.all([
+  const [totalProducts, lowStock, allProducts]:[number, number, ProductSummary[]] = await Promise.all([
     prisma.products.count({
       where: { userId: userId }
     }),
