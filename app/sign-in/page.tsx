@@ -23,7 +23,7 @@ const page = () => {
 
   return (
     <Container>
-        <div className='flex flex-col gap-5 justify-center items-center h-full'>
+        <div className='flex flex-col gap-5 justify-center items-center h-full' >
         <SignIn />
         <Link href={"/"}>
           <Button size={"sm"}>Go Back</Button>
