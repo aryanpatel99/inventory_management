@@ -61,7 +61,7 @@ const page = async () => {
 
     const weekLabel = `${String(weekStart.getMonth() + 1).padStart(2, '0')}/${String(weekStart.getDate() + 1).padStart(2, '0')}`;
 
-    const weekProducts = allProducts.filter(product => {
+    const weekProducts = allProducts.filter((product:any) => {
       const productDate = new Date(product.createAt);
       return productDate >= weekStart && productDate <= weekEnd;
     });
