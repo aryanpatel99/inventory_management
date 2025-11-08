@@ -77,7 +77,7 @@ const page = async () => {
   //   select:{price:true, quantity:true,createAt:true}
   // }) 
 
-  const totalValue = allProducts.reduce((acc, product) => {
+  const totalValue = allProducts.reduce((acc:number, product:any) => {
     return acc + (Number(product.price) * Number(product.quantity));
   }, 0);
 
