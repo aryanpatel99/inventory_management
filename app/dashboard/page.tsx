@@ -5,7 +5,8 @@ import { getCurrentUser } from '@/lib/auth'
 import { TrendingUp } from 'lucide-react'
 import ProductChart from '../components/ProductChart'
 
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@/lib/generated/prisma";
+
 
 type ProductSummary = Prisma.ProductsGetPayload<{
   select: { price: true; quantity: true; createAt: true };
