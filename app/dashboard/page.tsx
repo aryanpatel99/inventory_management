@@ -7,6 +7,17 @@ import ProductChart from '../components/ProductChart'
 
 import { Prisma } from "@/lib/generated/prisma";
 
+type Product = Prisma.ProductsGetPayload<{
+  select: { 
+    name: true;
+    quantity: true;
+    lowStockAt: true;
+    price?: true;
+    sku?: true;
+    createAt?: true;
+  };
+}>;
+
 
 type ProductSummary = Prisma.ProductsGetPayload<{
   select: { price: true; quantity: true; createAt: true };
@@ -166,7 +177,7 @@ const page = async () => {
               <h2 className='text-lg font-semibold text-gray-900 mb-6'>Stock Levels</h2>
             </div>
             <div className='space-y-3'>
-              {recent.map((product: Prisma.ProductsGetPayload<object>, i: number) => {
+              {recent.map((product: Product, i: number) => {
                 const stockLevel = product.quantity === 0 ? '0' : product.quantity <= (product.lowStockAt || 5) ? 1 : 2;
                 const bgColors = [
                   "bg-red-600",
