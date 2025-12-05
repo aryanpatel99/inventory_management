@@ -21,7 +21,7 @@ const page = async () => {
   const user = await getCurrentUser();
   const userId = user.id;
 
-  const [totalProducts, lowStock, allProducts]:[number, number, ProductSummary[]] = await Promise.all([
+  const [totalProducts, lowStock, allProducts]: [number, number, ProductSummary[]] = await Promise.all([
     prisma.products.count({
       where: { userId: userId }
     }),
@@ -67,7 +67,7 @@ const page = async () => {
 
     const weekLabel = `${String(weekStart.getMonth() + 1).padStart(2, '0')}/${String(weekStart.getDate() + 1).padStart(2, '0')}`;
 
-    const weekProducts = allProducts.filter((product:any) => {
+    const weekProducts = allProducts.filter((product) => {
       const productDate = new Date(product.createAt);
       return productDate >= weekStart && productDate <= weekEnd;
     });
@@ -83,7 +83,7 @@ const page = async () => {
   //   select:{price:true, quantity:true,createAt:true}
   // }) 
 
-  const totalValue = allProducts.reduce((acc:number, product:any) => {
+  const totalValue = allProducts.reduce((acc: number, product) => {
     return acc + (Number(product.price) * Number(product.quantity));
   }, 0);
 
