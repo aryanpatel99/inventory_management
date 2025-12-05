@@ -166,7 +166,7 @@ const page = async () => {
               <h2 className='text-lg font-semibold text-gray-900 mb-6'>Stock Levels</h2>
             </div>
             <div className='space-y-3'>
-              {recent.map((product: Prisma.ProductsGetPayload<object>, i) => {
+              {recent.map((product: Prisma.ProductsGetPayload<object>, i: number) => {
                 const stockLevel = product.quantity === 0 ? '0' : product.quantity <= (product.lowStockAt || 5) ? 1 : 2;
                 const bgColors = [
                   "bg-red-600",
